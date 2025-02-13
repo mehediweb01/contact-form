@@ -1,10 +1,10 @@
-import { Header } from "@/components";
+import { Header, InputForm } from "@/components";
 import Image from "next/image";
 import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-background min-h-screen ">
+    <div className="bg-background min-h-screen text-foreground ">
       <div className="py-[67px] space-y-8">
         <Header />
         <div className=" bg-[#FFFFFF0A] w-full max-w-[1092px] mx-auto flex flex-col sm:flex-row justify-between items-start gap-5 border border-[#0A0D170D] rounded-md relative">
@@ -12,7 +12,9 @@ const page = () => {
           <div className="size-[152px] bg-secondary absolute bottom-0 left-0 rounded-full blur-[200px]" />
           <div className="size-[152px] bg-secondary absolute top-0 right-0 rounded-full blur-[200px]" />
           {/* left side */}
-          <div></div>
+          <div className=" relative ms-14 p-2">
+            <InputForm />
+          </div>
           {/* right side */}
           <div className="w-full max-w-[516px] relative">
             <Image
