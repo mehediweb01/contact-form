@@ -14,7 +14,7 @@ const defaultValue = {
 
 type InputEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type TProps = { activePerson: IPerson[] };
-export const InputForm: FC<TProps> = ({ activePerson }) => {
+export const InputForm: FC<TProps> = ({}) => {
   const [data, setData] = useState<ContactForm>(defaultValue);
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target || {};
