@@ -1,17 +1,8 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Input, Textarea } from "./input";
-import { persons } from "@/lib/data";
-import { Button } from "./button";
+import { ContactForm, IPerson } from "@/types";
 
-interface ContactForm {
-  firstName: string;
-  lastName: string;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
 const defaultValue = {
   firstName: "",
   lastName: "",
@@ -20,8 +11,10 @@ const defaultValue = {
   phone: "",
   message: "",
 };
+
 type InputEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-export const InputForm = () => {
+type TProps = { activePerson: IPerson[] };
+export const InputForm: FC<TProps> = ({ activePerson }) => {
   const [data, setData] = useState<ContactForm>(defaultValue);
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target || {};
@@ -39,20 +32,9 @@ export const InputForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setData(defaultValue);
-    console.log(data);
   };
   return (
     <form className="w-full space-y-3" onSubmit={handleSubmit}>
-      <div className="mb-8">
-        <h3 className="text-2xl sm:text-3xl font-semibold tracking-[-2%]">
-          Let&apos;s connected
-        </h3>
-        <div className="space-x-3 space-y-2">
-          {persons.map((item) => (
-            <Button key={item.id}>{item.name}</Button>
-          ))}
-        </div>
-      </div>
       <div className="flex justify-center items-center gap-3">
         <Input
           type="text"

@@ -1,4 +1,4 @@
-import { Header, InputForm } from "@/components";
+import { ContactUs, Header } from "@/components";
 import Image from "next/image";
 import React from "react";
 
@@ -13,7 +13,7 @@ const page = () => {
           <div className="size-[152px] bg-secondary absolute top-0 right-0 rounded-full blur-[200px]" />
           {/* left side */}
           <div className=" relative ms-14 p-2">
-            <InputForm />
+            <ContactUs />
           </div>
           {/* right side */}
           <div className="w-full max-w-[516px] relative">
