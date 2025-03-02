@@ -1,6 +1,6 @@
-import { IProps } from "@/types";
+import { IPerson } from "@/types";
 
-export const persons: IProps[] = [
+export const persons: IPerson[] = [
   {
     id: 1,
     name: "mehedi",
