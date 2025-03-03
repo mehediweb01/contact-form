@@ -4,8 +4,8 @@ export interface IPerson {
   email: string;
 }
 export interface ContactForm {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   name: string;
   email: string;
   phone: string;

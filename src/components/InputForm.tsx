@@ -2,6 +2,8 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Input, Textarea } from "./input";
 import { ContactForm, IPerson } from "@/types";
+import { SendMessage } from "@/server/mail";
+import { toast } from "sonner";
 
 const defaultValue = {
   firstName: "",
@@ -14,7 +16,7 @@ const defaultValue = {
 
 type InputEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type TProps = { activePerson: IPerson[] };
-export const InputForm: FC<TProps> = ({}) => {
+export const InputForm: FC<TProps> = ({ activePerson }) => {
   const [data, setData] = useState<ContactForm>(defaultValue);
   const handleChange = (e: InputEvent) => {
     const { name, value } = e.target || {};
@@ -29,9 +31,25 @@ export const InputForm: FC<TProps> = ({}) => {
           : prev.name,
     }));
   };
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setData(defaultValue);
+    const parsons = activePerson.map((parson) => parson.email);
+
+    if (data.phone) {
+      const reg = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+      if (!reg.test(data.phone))
+        return toast.error("Please enter a valid phone number!");
+    }
+
+    if (data.name && data.email && data.phone && data.message) {
+      toast.promise(SendMessage(parsons, data), {
+        loading: "Loading...",
+        success: "Message sent successfully! 🚀",
+        error: "Failed to send message! 😢",
+      });
+      setData(defaultValue);
+    } else toast.error("Please fill all the fields!");
   };
   return (
     <form className="w-full space-y-3" onSubmit={handleSubmit}>
@@ -42,7 +60,6 @@ export const InputForm: FC<TProps> = ({}) => {
           name="firstName"
           value={data.firstName}
           onChange={handleChange}
-          required
         />
         <Input
           type="text"
@@ -50,7 +67,6 @@ export const InputForm: FC<TProps> = ({}) => {
           name="lastName"
           value={data.lastName}
           onChange={handleChange}
-          required
         />
       </div>
       <Input
@@ -59,7 +75,6 @@ export const InputForm: FC<TProps> = ({}) => {
         name="email"
         value={data.email}
         onChange={handleChange}
-        required
       />
       <Input
         type="number"
@@ -67,14 +82,12 @@ export const InputForm: FC<TProps> = ({}) => {
         name="phone"
         value={data.phone}
         onChange={handleChange}
-        required
       />
       <Textarea
         placeholder="message"
         name="message"
         value={data.message}
         onChange={handleChange}
-        required
       />
       <button
         type="submit"
